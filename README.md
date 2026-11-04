@@ -2,6 +2,13 @@
 
 A reusable Portugol Studio 2.0 interpreter library written in Rust. The crate depends on `indexmap`, can be embedded in Rust applications, and includes a standalone terminal runner.
 
+## Original language references
+
+- [Portugol Studio official site (UNIVALI LITE)](https://univali-lite.github.io/Portugol-Studio/)
+- [Upstream Portugol Studio source repository](https://github.com/UNIVALI-LITE/Portugol-Studio)
+
+These upstream materials are the references for Portugol Studio 2.0 compatibility. This repository provides an independent Rust implementation.
+
 ## Source example
 
 ```por
