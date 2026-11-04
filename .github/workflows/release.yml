@@ -34,9 +34,9 @@ jobs:
         run: |
           set -euo pipefail
           version="${GITHUB_REF_NAME}"
-          bundle="potoo-portugol-interpreter-${version}-${{ matrix.target }}"
+          bundle="potoo-portugol-studio-2-interpreter-${version}-${{ matrix.target }}"
           mkdir -p "$bundle"
-          cp "target/release/potoo-portugol" "$bundle/"
+          cp "target/release/potoo-portugol-studio-2" "$bundle/"
           cp README.md LICENSE "$bundle/"
           tar -czf "$bundle.tar.gz" "$bundle"
       - name: Package Windows archive
@@ -44,14 +44,14 @@ jobs:
         shell: pwsh
         run: |
           $version = $env:GITHUB_REF_NAME
-          $bundle = "potoo-portugol-interpreter-$version-${{ matrix.target }}"
+          $bundle = "potoo-portugol-studio-2-interpreter-$version-${{ matrix.target }}"
           New-Item -ItemType Directory -Force $bundle | Out-Null
-          Copy-Item "target/release/potoo-portugol.exe", "README.md", "LICENSE" -Destination $bundle
+          Copy-Item "target/release/potoo-portugol-studio-2.exe", "README.md", "LICENSE" -Destination $bundle
           Compress-Archive -Path $bundle -DestinationPath "$bundle.zip"
       - uses: actions/upload-artifact@v4
         with:
           name: release-${{ matrix.target }}
-          path: potoo-portugol-interpreter-*-${{ matrix.target }}.*
+          path: potoo-portugol-studio-2-interpreter-*-${{ matrix.target }}.*
           if-no-files-found: error
 
   publish:
@@ -71,5 +71,5 @@ jobs:
           sha256sum *.tar.gz *.zip > SHA256SUMS
           gh release create "$GITHUB_REF_NAME" *.tar.gz *.zip SHA256SUMS \
             --repo "$GITHUB_REPOSITORY" \
-            --title "potoo-portugol-interpreter $GITHUB_REF_NAME" \
+            --title "potoo-portugol-studio-2-interpreter $GITHUB_REF_NAME" \
             --generate-notes

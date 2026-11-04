@@ -1,4 +1,4 @@
-# Contributing to potoo-portugol-interpreter
+# Contributing to Potoo Portugol Studio 2.0 Interpreter
 
 Contributions to the Portugol interpreter, its tests, and its documentation are welcome.
 
@@ -25,7 +25,7 @@ cargo package
 ## Changes to language behavior
 
 - Add tests for new syntax, runtime behavior, diagnostics, and resource limits where applicable.
-- Keep the documented Portugol 2.0 dialect and host-dependent library features explicit. Do not claim behavior that has not been implemented and verified.
+- Keep the documented Portugol Studio 2.0 dialect and host-dependent library features explicit. Do not claim behavior that has not been implemented and verified.
 - Keep public documentation in English and update it when the API or supported behavior changes.
 - Keep changes focused and list the verification commands you ran.
 - Preserve existing copyright and license notices. Check the license of any copied third-party material and disclose added dependencies with their purpose and license.

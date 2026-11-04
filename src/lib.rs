@@ -64,7 +64,7 @@ pub struct CalendarDateTime {
     pub year: i32,
     pub month: u32,
     pub day: u32,
-    /// Sunday is 1, matching the `Calendario` library in Portugol 2.0.
+    /// Sunday is 1, matching the `Calendario` library in Portugol Studio 2.0.
     pub weekday: u32,
     pub hour: u32,
     pub minute: u32,
@@ -173,7 +173,7 @@ pub trait RuntimeIo {
         Err("o host não oferece suporte à biblioteca Arquivos".to_owned())
     }
 
-    /// Replaces text using Portugol 2.0 regular-expression search and replacement syntax.
+    /// Replaces text using Portugol Studio 2.0 regular-expression search and replacement syntax.
     fn portugol_file_replace_text(
         &mut self,
         _path: &str,

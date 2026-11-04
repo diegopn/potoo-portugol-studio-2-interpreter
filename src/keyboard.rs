@@ -1,4 +1,4 @@
-/// Returns a Portugol 2.0 keyboard constant using Java `KeyEvent` values.
+/// Returns a Portugol Studio 2.0 keyboard constant using Java `KeyEvent` values.
 pub(crate) fn constant_code(name: &str) -> Option<i64> {
     Some(match name {
         "TECLA_ENTER" => 10,

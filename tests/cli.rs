@@ -5,14 +5,14 @@ use std::{
     time::{SystemTime, UNIX_EPOCH},
 };
 
-const CLI: &str = env!("CARGO_BIN_EXE_potoo-portugol");
+const CLI: &str = env!("CARGO_BIN_EXE_potoo-portugol-studio-2");
 
 fn run(source: &str, input: &str) -> Output {
     let unique = SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .unwrap()
         .as_nanos();
-    let path = std::env::temp_dir().join(format!("potoo-portugol-{unique}.por"));
+    let path = std::env::temp_dir().join(format!("potoo-portugol-studio-2-{unique}.por"));
     fs::write(&path, source).unwrap();
 
     let mut child = Command::new(CLI)

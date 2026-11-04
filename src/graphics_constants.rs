@@ -1,4 +1,4 @@
-/// Returns the integer value of a Portugol 2.0 `Graficos` constant.
+/// Returns the integer value of a Portugol Studio 2.0 `Graficos` constant.
 pub(crate) fn constant_value(name: &str) -> Option<i64> {
     Some(match name {
         "COR_PRETO" => -16_777_216,

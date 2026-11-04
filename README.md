@@ -1,6 +1,6 @@
-# potoo-portugol-interpreter
+# Potoo Portugol Studio 2.0 Interpreter
 
-A reusable Portugol interpreter library written in Rust. The crate depends on `indexmap`, can be embedded in Rust applications, and includes a standalone terminal runner.
+A reusable Portugol Studio 2.0 interpreter library written in Rust. The crate depends on `indexmap`, can be embedded in Rust applications, and includes a standalone terminal runner.
 
 ## Source example
 
@@ -18,7 +18,7 @@ Add the crate as a dependency:
 
 ```toml
 [dependencies]
-potoo-portugol-interpreter = { git = "https://github.com/diegopn/potoo-portugol-interpreter.git", tag = "v0.1.0" }
+potoo-portugol-interpreter = { git = "https://github.com/diegopn/potoo-portugol-studio-2-interpreter.git", tag = "v0.1.0" }
 ```
 
 Provide input and output through `RuntimeIo`, then call `execute`:
@@ -79,7 +79,7 @@ Call `parse` instead of `execute` when a host needs to inspect the public syntax
 
 ## Dialect reference
 
-This crate targets **Portugol 2.0**. The [Potoo language reference](https://diegopn.github.io/potoo-site/en/manual/portugol/) identifies the upstream sources used for compatibility work. There is no single language-wide Portugol standard that covers all tools and dialects.
+This crate targets **Portugol Studio 2.0**. The [Potoo language reference](https://diegopn.github.io/potoo-site/en/manual/portugol/) identifies the upstream sources used for compatibility work. There is no single language-wide Portugol standard that covers all tools and dialects.
 
 The interpreter does not claim full compatibility yet: its parser reports the first lexical or syntax error, and graphics, keyboard, mouse, audio, HTTP, file, and calendar behavior depends on the host implementing the corresponding `RuntimeIo` callbacks. The Potoo IDE now provides GTK host handlers for graphics, keyboard, mouse, and audio, but those interactive features still need manual validation on each supported desktop platform. Runtime diagnostics include a source line and column.
 
@@ -101,39 +101,39 @@ cargo test
 
 ## Standalone command-line runner
 
-The `potoo-portugol` command runs one source file without Potoo IDE. For example:
+The `potoo-portugol-studio-2` command runs one source file without Potoo IDE. For example:
 
 ```sh
-potoo-portugol example.por
+potoo-portugol-studio-2 example.por
 ```
 
 The terminal runner provides standard input/output. Host services for graphics, keyboard, mouse, audio, HTTP, project files, and calendar are unavailable; the interpreter reports those callbacks as unsupported. The runner does not provide an interactive debugger.
 
 ## Install a prebuilt runner
 
-Download the archive for your system and `SHA256SUMS` from the [latest GitHub Release](https://github.com/diegopn/potoo-portugol-interpreter/releases/latest). The first release is tagged `v0.1.0` and uses these asset names:
+Download the archive for your system and `SHA256SUMS` from the [latest GitHub Release](https://github.com/diegopn/potoo-portugol-studio-2-interpreter/releases/latest). The first release is tagged `v0.1.0` and uses these asset names:
 
 | System | Archive |
 | --- | --- |
-| Linux x86_64 | `potoo-portugol-interpreter-v0.1.0-x86_64-unknown-linux-gnu.tar.gz` |
-| Windows x86_64 | `potoo-portugol-interpreter-v0.1.0-x86_64-pc-windows-msvc.zip` |
-| macOS Intel | `potoo-portugol-interpreter-v0.1.0-x86_64-apple-darwin.tar.gz` |
-| macOS Apple silicon | `potoo-portugol-interpreter-v0.1.0-aarch64-apple-darwin.tar.gz` |
+| Linux x86_64 | `potoo-portugol-studio-2-interpreter-v0.1.0-x86_64-unknown-linux-gnu.tar.gz` |
+| Windows x86_64 | `potoo-portugol-studio-2-interpreter-v0.1.0-x86_64-pc-windows-msvc.zip` |
+| macOS Intel | `potoo-portugol-studio-2-interpreter-v0.1.0-x86_64-apple-darwin.tar.gz` |
+| macOS Apple silicon | `potoo-portugol-studio-2-interpreter-v0.1.0-aarch64-apple-darwin.tar.gz` |
 
 The Linux archive targets glibc 2.35 or later and is built on Ubuntu 22.04. Linux x86_64 is the only target verified in this source snapshot; Windows and macOS builds and CLI tests must pass on native runners before their release archives are published.
 
 ### Linux x86_64
 
 ```sh
-asset=potoo-portugol-interpreter-v0.1.0-x86_64-unknown-linux-gnu.tar.gz
-release=https://github.com/diegopn/potoo-portugol-interpreter/releases/download/v0.1.0
+asset=potoo-portugol-studio-2-interpreter-v0.1.0-x86_64-unknown-linux-gnu.tar.gz
+release=https://github.com/diegopn/potoo-portugol-studio-2-interpreter/releases/download/v0.1.0
 curl -fLO "$release/$asset"
 curl -fLO "$release/SHA256SUMS"
 sha256sum "$asset" # compare with its line in SHA256SUMS
 tar -xzf "$asset"
 mkdir -p "$HOME/.local/bin"
-install -m 755 "potoo-portugol-interpreter-v0.1.0-x86_64-unknown-linux-gnu/potoo-portugol" "$HOME/.local/bin/potoo-portugol"
-potoo-portugol example.por
+install -m 755 "potoo-portugol-studio-2-interpreter-v0.1.0-x86_64-unknown-linux-gnu/potoo-portugol-studio-2" "$HOME/.local/bin/potoo-portugol-studio-2"
+potoo-portugol-studio-2 example.por
 ```
 
 Add it for the current shell with `export PATH="$HOME/.local/bin:$PATH"`; place that line in your shell profile to keep it for future sessions.
@@ -141,31 +141,31 @@ Add it for the current shell with `export PATH="$HOME/.local/bin:$PATH"`; place 
 ### Windows x86_64 (PowerShell)
 
 ```powershell
-$asset = "potoo-portugol-interpreter-v0.1.0-x86_64-pc-windows-msvc.zip"
-$release = "https://github.com/diegopn/potoo-portugol-interpreter/releases/download/v0.1.0"
+$asset = "potoo-portugol-studio-2-interpreter-v0.1.0-x86_64-pc-windows-msvc.zip"
+$release = "https://github.com/diegopn/potoo-portugol-studio-2-interpreter/releases/download/v0.1.0"
 Invoke-WebRequest "$release/$asset" -OutFile $asset
 Invoke-WebRequest "$release/SHA256SUMS" -OutFile SHA256SUMS
 Get-FileHash ".\$asset" -Algorithm SHA256 # compare with the matching SHA256SUMS entry
-Expand-Archive ".\$asset" -DestinationPath .\potoo-portugol-interpreter
-.\potoo-portugol-interpreter\potoo-portugol-interpreter-v0.1.0-x86_64-pc-windows-msvc\potoo-portugol.exe .\example.por
+Expand-Archive ".\$asset" -DestinationPath .\potoo-portugol-studio-2-interpreter
+.\potoo-portugol-studio-2-interpreter\potoo-portugol-studio-2-interpreter-v0.1.0-x86_64-pc-windows-msvc\potoo-portugol-studio-2.exe .\example.por
 ```
 
-To run `potoo-portugol.exe` from any folder, add its extracted directory to your user `PATH` in Windows Environment Variables.
+To run `potoo-portugol-studio-2.exe` from any folder, add its extracted directory to your user `PATH` in Windows Environment Variables.
 
 ### macOS Intel and Apple silicon
 
 Use the `x86_64-apple-darwin` archive on Intel Macs and `aarch64-apple-darwin` on Apple silicon.
 
 ```sh
-asset=potoo-portugol-interpreter-v0.1.0-<target>.tar.gz
-release=https://github.com/diegopn/potoo-portugol-interpreter/releases/download/v0.1.0
+asset=potoo-portugol-studio-2-interpreter-v0.1.0-<target>.tar.gz
+release=https://github.com/diegopn/potoo-portugol-studio-2-interpreter/releases/download/v0.1.0
 curl -fLO "$release/$asset"
 curl -fLO "$release/SHA256SUMS"
 shasum -a 256 "$asset" # compare with its line in SHA256SUMS
 tar -xzf "$asset"
 mkdir -p "$HOME/.local/bin"
-install -m 755 "${asset%.tar.gz}/potoo-portugol" "$HOME/.local/bin/potoo-portugol"
-potoo-portugol example.por
+install -m 755 "${asset%.tar.gz}/potoo-portugol-studio-2" "$HOME/.local/bin/potoo-portugol-studio-2"
+potoo-portugol-studio-2 example.por
 ```
 
 Replace `<target>` with `x86_64-apple-darwin` or `aarch64-apple-darwin`. Add it for the current shell with `export PATH="$HOME/.local/bin:$PATH"`; place that line in `~/.zprofile` to keep it for future macOS sessions.
@@ -175,14 +175,14 @@ Replace `<target>` with `x86_64-apple-darwin` or `aarch64-apple-darwin`. Add it 
 With Rust 1.93 or later and network access, Cargo can install the command directly from its tagged source:
 
 ```sh
-cargo install --git https://github.com/diegopn/potoo-portugol-interpreter.git --tag v0.1.0 --bin potoo-portugol
+cargo install --git https://github.com/diegopn/potoo-portugol-studio-2-interpreter.git --tag v0.1.0 --bin potoo-portugol-studio-2
 ```
 
 ## Use as a Rust library
 
 ```toml
 [dependencies]
-potoo-portugol-interpreter = { git = "https://github.com/diegopn/potoo-portugol-interpreter.git", tag = "v0.1.0" }
+potoo-portugol-interpreter = { git = "https://github.com/diegopn/potoo-portugol-studio-2-interpreter.git", tag = "v0.1.0" }
 ```
 
 The library API lets Rust applications provide their own `RuntimeIo` implementation.
