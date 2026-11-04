@@ -2,6 +2,13 @@
 
 A reusable Portugol Studio 2.0 interpreter library written in Rust. The crate depends on `indexmap`, can be embedded in Rust applications, and includes a standalone terminal runner.
 
+## Original language references
+
+- [Portugol Studio official site (UNIVALI LITE)](https://univali-lite.github.io/Portugol-Studio/)
+- [Upstream Portugol Studio source repository](https://github.com/UNIVALI-LITE/Portugol-Studio)
+
+These upstream materials are the references for Portugol Studio 2.0 compatibility. This repository provides an independent Rust implementation.
+
 ## Source example
 
 ```por
@@ -187,6 +194,10 @@ potoo-portugol-interpreter = { git = "https://github.com/diegopn/potoo-portugol-
 
 The library API lets Rust applications provide their own `RuntimeIo` implementation.
 
-## DOI
+## DOI and citation
 
-A stable Figshare DOI will be added when the first public release is published.
+DOI: [10.6084/m9.figshare.34914840](https://doi.org/10.6084/m9.figshare.34914840)
+
+Suggested reference (ABNT NBR 6023:2018):
+
+> NASCIMENTO, Diego Pereira do. *Portugol Studio 2.0 interpreter v0.1.0*. 2026. Programa de computador. Disponível em: https://doi.org/10.6084/m9.figshare.34914840. Acesso em: 4 nov. 2026.
