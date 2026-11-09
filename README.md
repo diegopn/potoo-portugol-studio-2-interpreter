@@ -1,6 +1,21 @@
-# Potoo Portugol Studio 2.0 Interpreter
+<h1 align="center">Potoo Portugol Studio 2.0 Interpreter</h1>
 
-A reusable Portugol Studio 2.0 interpreter library written in Rust. The crate depends on `indexmap`, can be embedded in Rust applications, and includes a standalone terminal runner.
+<p align="center">An independent Rust interpreter library and command-line runner for Portugol Studio 2.0.</p>
+
+<p align="center">
+  <a href="https://github.com/diegopn/potoo-portugol-studio-2-interpreter/releases/latest">Download</a> ·
+  <a href="https://diegopn.github.io/potoo-site/">Website</a> ·
+  <a href="https://diegopn.github.io/potoo-site/manual/portugol-studio/">User manual</a>
+</p>
+
+<p align="center">
+  <a href="https://www.rust-lang.org/"><img alt="Rust" src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white"></a>
+  <a href="https://doc.rust-lang.org/cargo/"><img alt="Cargo" src="https://img.shields.io/badge/Cargo-DEA584?style=for-the-badge&logo=rust&logoColor=white"></a>
+  <img alt="Rust library" src="https://img.shields.io/badge/Rust_library-4A86CF?style=for-the-badge">
+  <img alt="CLI" src="https://img.shields.io/badge/CLI-6A4C93?style=for-the-badge">
+</p>
+
+The crate depends on `indexmap` and can be embedded in Rust applications.
 
 ## Original language references
 
@@ -86,7 +101,7 @@ Call `parse` instead of `execute` when a host needs to inspect the public syntax
 
 ## Dialect reference
 
-This crate targets **Portugol Studio 2.0**. The [Potoo language reference](https://diegopn.github.io/potoo-site/en/manual/portugol/) identifies the upstream sources used for compatibility work. There is no single language-wide Portugol standard that covers all tools and dialects.
+This crate targets **Portugol Studio 2.0**. The [Potoo language reference](https://diegopn.github.io/potoo-site/en/manual/portugol-studio/) identifies the upstream sources used for compatibility work. There is no single language-wide Portugol standard that covers all tools and dialects.
 
 The interpreter does not claim full compatibility yet: its parser reports the first lexical or syntax error, and graphics, keyboard, mouse, audio, HTTP, file, and calendar behavior depends on the host implementing the corresponding `RuntimeIo` callbacks. The Potoo IDE now provides GTK host handlers for graphics, keyboard, mouse, and audio, but those interactive features still need manual validation on each supported desktop platform. Runtime diagnostics include a source line and column.
 
@@ -102,6 +117,7 @@ cargo test
 
 ## Project policies
 
+- [Code of conduct](CODE_OF_CONDUCT.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security policy](SECURITY.md)
 - [GPL-3.0-or-later license](LICENSE)
@@ -118,64 +134,52 @@ The terminal runner provides standard input/output. Host services for graphics, 
 
 ## Install a prebuilt runner
 
-Download the archive for your system and `SHA256SUMS` from the [latest GitHub Release](https://github.com/diegopn/potoo-portugol-studio-2-interpreter/releases/latest). Binary releases are not published yet. The planned first release will be tagged `v0.1.0`; its release workflow is configured to produce these asset names:
+Prebuilt binaries are published on the [GitHub Releases page](https://github.com/diegopn/potoo-portugol-studio-2-interpreter/releases). Choose a version and the package for your system there. Packages are currently available for Linux x86_64, Windows x86_64 (MSVC), and Intel macOS (x86_64). The current release does not include an Apple silicon (arm64) package.
 
-| System | Archive |
-| --- | --- |
-| Linux x86_64 | `potoo-portugol-studio-2-interpreter-v0.1.0-x86_64-unknown-linux-gnu.tar.gz` |
-| Windows x86_64 | `potoo-portugol-studio-2-interpreter-v0.1.0-x86_64-pc-windows-msvc.zip` |
-| macOS Intel | `potoo-portugol-studio-2-interpreter-v0.1.0-x86_64-apple-darwin.tar.gz` |
-
-
-Current CI and release targets are Linux x86_64, Windows x86_64, and macOS Intel (x86_64). Apple silicon (arm64) is not supported in this release; support may be added in a future version.
+Download only the package for your system and the `SHA256SUMS` file, and save both in the same folder. Before extracting or running the executable, compare the package's SHA-256 hash with its corresponding entry in `SHA256SUMS`. Run the commands below from that folder. Replace `example.por` with the path to a source file you want to run; the release package does not include a sample file.
 
 ### Linux x86_64
 
 ```sh
-asset=potoo-portugol-studio-2-interpreter-v0.1.0-x86_64-unknown-linux-gnu.tar.gz
-release=https://github.com/diegopn/potoo-portugol-studio-2-interpreter/releases/download/v0.1.0
-curl -fLO "$release/$asset"
-curl -fLO "$release/SHA256SUMS"
+asset=$(ls -1 potoo-portugol-studio-2-interpreter-v*-x86_64-unknown-linux-gnu.tar.gz | head -n 1)
 sha256sum "$asset" # compare with its line in SHA256SUMS
 tar -xzf "$asset"
 mkdir -p "$HOME/.local/bin"
-install -m 755 "potoo-portugol-studio-2-interpreter-v0.1.0-x86_64-unknown-linux-gnu/potoo-portugol-studio-2" "$HOME/.local/bin/potoo-portugol-studio-2"
+install -m 755 "${asset%.tar.gz}/potoo-portugol-studio-2" "$HOME/.local/bin/potoo-portugol-studio-2"
+export PATH="$HOME/.local/bin:$PATH"
 potoo-portugol-studio-2 example.por
 ```
 
-Add it for the current shell with `export PATH="$HOME/.local/bin:$PATH"`; place that line in your shell profile to keep it for future sessions.
+To keep the command available in new Linux sessions, add the `export PATH="$HOME/.local/bin:$PATH"` line to your shell profile.
 
 ### Windows x86_64 (PowerShell)
 
 ```powershell
-$asset = "potoo-portugol-studio-2-interpreter-v0.1.0-x86_64-pc-windows-msvc.zip"
-$release = "https://github.com/diegopn/potoo-portugol-studio-2-interpreter/releases/download/v0.1.0"
-Invoke-WebRequest "$release/$asset" -OutFile $asset
-Invoke-WebRequest "$release/SHA256SUMS" -OutFile SHA256SUMS
-Get-FileHash ".\$asset" -Algorithm SHA256 # compare with the matching SHA256SUMS entry
-Expand-Archive ".\$asset" -DestinationPath .\potoo-portugol-studio-2-interpreter
-.\potoo-portugol-studio-2-interpreter\potoo-portugol-studio-2-interpreter-v0.1.0-x86_64-pc-windows-msvc\potoo-portugol-studio-2.exe .\example.por
+$archive = Get-ChildItem -Filter "potoo-portugol-studio-2-interpreter-v*-x86_64-pc-windows-msvc.zip" | Select-Object -First 1
+Get-FileHash $archive.FullName -Algorithm SHA256 # compare with the matching SHA256SUMS entry
+Expand-Archive $archive.FullName -DestinationPath .\potoo-portugol-studio-2
+$exe = Get-ChildItem .\potoo-portugol-studio-2 -Filter "potoo-portugol-studio-2.exe" -Recurse | Select-Object -First 1
+& $exe.FullName .\example.por
 ```
 
-To run `potoo-portugol-studio-2.exe` from any folder, add its extracted directory to your user `PATH` in Windows Environment Variables.
+To run `potoo-portugol-studio-2.exe` from another folder, add the directory containing the executable to your user `PATH`.
 
-### macOS Intel
+### Intel macOS
 
-This release supports Intel Macs only. Apple silicon is not supported in this version.
+The published macOS package targets Intel Macs (x86_64). There is no prebuilt Apple silicon package in the current release.
 
 ```sh
-asset=potoo-portugol-studio-2-interpreter-v0.1.0-x86_64-apple-darwin.tar.gz
-release=https://github.com/diegopn/potoo-portugol-studio-2-interpreter/releases/download/v0.1.0
-curl -fLO "$release/$asset"
-curl -fLO "$release/SHA256SUMS"
+asset=$(ls -1 potoo-portugol-studio-2-interpreter-v*-x86_64-apple-darwin.tar.gz | head -n 1)
 shasum -a 256 "$asset" # compare with its line in SHA256SUMS
 tar -xzf "$asset"
 mkdir -p "$HOME/.local/bin"
 install -m 755 "${asset%.tar.gz}/potoo-portugol-studio-2" "$HOME/.local/bin/potoo-portugol-studio-2"
+export PATH="$HOME/.local/bin:$PATH"
 potoo-portugol-studio-2 example.por
 ```
 
-Add it for the current shell with `export PATH="$HOME/.local/bin:$PATH"`; place that line in `~/.zprofile` to keep it for future macOS sessions.
+Add the `export PATH="$HOME/.local/bin:$PATH"` line to `~/.zprofile` to keep the command available in future macOS sessions.
+
 
 ## Install from source
 
@@ -193,6 +197,14 @@ potoo-portugol-interpreter = { git = "https://github.com/diegopn/potoo-portugol-
 ```
 
 The library API lets Rust applications provide their own `RuntimeIo` implementation.
+
+## Support
+
+If this interpreter is useful in your work, you can support its continued development:
+
+<p align="left">
+  <a href="https://github.com/sponsors/diegopn"><img alt="Become a sponsor" src="https://img.shields.io/badge/Become_a_sponsor-EA4AAA?style=for-the-badge&logo=githubsponsors&logoColor=white"></a>
+</p>
 
 ## DOI and citation
 
