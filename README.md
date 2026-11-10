@@ -1,6 +1,32 @@
-# Potoo Portugol Studio 2.0 Interpreter
+<p align="center">
+  <img src="https://diegopn.github.io/potoo-site/src/assets/images/language-interpreter-icon.svg?v=1c651ca7" alt="Potoo IDE language interpreter icon" width="120" />
+</p>
 
-A reusable Portugol Studio 2.0 interpreter library written in Rust. The crate depends on `indexmap`, can be embedded in Rust applications, and includes a standalone terminal runner.
+<h1 align="center">Potoo Portugol Studio 2.0 Interpreter</h1>
+
+<p align="center">An independent Rust interpreter library and command-line runner for Portugol Studio 2.0.</p>
+
+<p align="center">
+  <a href="https://github.com/diegopn/potoo-portugol-studio-2-interpreter/releases/latest">Download</a> ·
+  <a href="https://diegopn.github.io/potoo-site/">Website</a> ·
+  <a href="https://diegopn.github.io/potoo-site/manual/portugol-studio/">User manual</a>
+</p>
+
+<p align="center">
+  <a href="https://www.rust-lang.org/"><img alt="Rust" src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white"></a>
+  <a href="https://doc.rust-lang.org/cargo/"><img alt="Cargo" src="https://img.shields.io/badge/Cargo-DEA584?style=for-the-badge&logo=rust&logoColor=white"></a>
+  <img alt="Rust library" src="https://img.shields.io/badge/Rust_library-4A86CF?style=for-the-badge">
+  <img alt="CLI" src="https://img.shields.io/badge/CLI-6A4C93?style=for-the-badge">
+</p>
+
+The crate depends on `indexmap` and can be embedded in Rust applications.
+
+## Original language references
+
+- [Portugol Studio official site (UNIVALI LITE)](https://univali-lite.github.io/Portugol-Studio/)
+- [Upstream Portugol Studio source repository](https://github.com/UNIVALI-LITE/Portugol-Studio)
+
+These upstream materials are the references for Portugol Studio 2.0 compatibility. This repository provides an independent Rust implementation.
 
 ## Original language references
 
@@ -100,8 +126,17 @@ cargo check
 cargo test
 ```
 
+## Support
+
+If this interpreter is useful in your work, you can support its continued development:
+
+<p align="left">
+  <a href="https://github.com/sponsors/diegopn"><img alt="Become a sponsor" src="https://img.shields.io/badge/Become_a_sponsor-EA4AAA?style=for-the-badge&logo=githubsponsors&logoColor=white"></a>
+</p>
+
 ## Project policies
 
+- [Code of conduct](CODE_OF_CONDUCT.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security policy](SECURITY.md)
 - [GPL-3.0-or-later license](LICENSE)
