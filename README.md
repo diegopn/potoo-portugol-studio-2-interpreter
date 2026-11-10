@@ -28,13 +28,6 @@ The crate depends on `indexmap` and can be embedded in Rust applications.
 
 These upstream materials are the references for Portugol Studio 2.0 compatibility. This repository provides an independent Rust implementation.
 
-## Original language references
-
-- [Portugol Studio official site (UNIVALI LITE)](https://univali-lite.github.io/Portugol-Studio/)
-- [Upstream Portugol Studio source repository](https://github.com/UNIVALI-LITE/Portugol-Studio)
-
-These upstream materials are the references for Portugol Studio 2.0 compatibility. This repository provides an independent Rust implementation.
-
 ## Source example
 
 ```por
@@ -126,6 +119,14 @@ cargo check
 cargo test
 ```
 
+## Support
+
+If this interpreter is useful in your work, you can support its continued development:
+
+<p align="left">
+  <a href="https://github.com/sponsors/diegopn"><img alt="Become a sponsor" src="https://img.shields.io/badge/Become_a_sponsor-EA4AAA?style=for-the-badge&logo=githubsponsors&logoColor=white"></a>
+</p>
+
 ## Project policies
 
 - [Code of conduct](CODE_OF_CONDUCT.md)
@@ -208,14 +209,6 @@ potoo-portugol-interpreter = { git = "https://github.com/diegopn/potoo-portugol-
 ```
 
 The library API lets Rust applications provide their own `RuntimeIo` implementation.
-
-## Support
-
-If this interpreter is useful in your work, you can support its continued development:
-
-<p align="left">
-  <a href="https://github.com/sponsors/diegopn"><img alt="Become a sponsor" src="https://img.shields.io/badge/Become_a_sponsor-EA4AAA?style=for-the-badge&logo=githubsponsors&logoColor=white"></a>
-</p>
 
 ## DOI and citation
 
