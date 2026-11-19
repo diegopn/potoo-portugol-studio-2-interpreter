@@ -145,61 +145,84 @@ If this interpreter is useful in your work, you can support its continued develo
 
 ## Standalone command-line runner
 
-The `potoo-portugol-studio-2` command runs one source file without Potoo IDE. For example:
+Save this Portugol Studio 2.0 program as `example.por`:
+
+```por
+programa { funcao inicio() { escreva("Olá, Portugol!") } }
+```
+
+Run one source file without Potoo IDE:
 
 ```sh
 potoo-portugol-studio-2 example.por
 ```
 
-The terminal runner provides standard input/output. Host services for graphics, keyboard, mouse, audio, HTTP, project files, and calendar are unavailable; the interpreter reports those callbacks as unsupported. The runner does not provide an interactive debugger.
+The example prints `Olá, Portugol!`. The terminal runner provides standard input/output. Host services for graphics, keyboard, mouse, audio, HTTP, project files, and calendar are unavailable; the interpreter reports those callbacks as unsupported. The parser reports the first lexical or syntax error, and the runner does not provide an interactive debugger.
 
 ## Install a prebuilt runner
 
-Prebuilt binaries are published on the [GitHub Releases page](https://github.com/diegopn/potoo-portugol-studio-2-interpreter/releases). Choose a version and the package for your system there. Packages are currently available for Linux x86_64, Windows x86_64 (MSVC), and Intel macOS (x86_64). The current release does not include an Apple silicon (arm64) package.
+The v0.1.1 release provides native CLI packages for Linux x86_64 GNU, Windows x86_64 MSVC, Intel macOS x86_64, and Apple silicon macOS arm64. Download your system's archive and `SHA256SUMS` from the [latest GitHub release](https://github.com/diegopn/potoo-portugol-studio-2-interpreter/releases/latest), then run the matching commands below from the folder containing both files. Each archive contains `potoo-portugol-studio-2` (or `potoo-portugol-studio-2.exe` on Windows) and the repository license.
 
-Download only the package for your system and the `SHA256SUMS` file, and save both in the same folder. Before extracting or running the executable, compare the package's SHA-256 hash with its corresponding entry in `SHA256SUMS`. Run the commands below from that folder. Replace `example.por` with the path to a source file you want to run; the release package does not include a sample file.
-
-### Linux x86_64
+### Linux x86_64 GNU
 
 ```sh
-asset=$(ls -1 potoo-portugol-studio-2-interpreter-v*-x86_64-unknown-linux-gnu.tar.gz | head -n 1)
-sha256sum "$asset" # compare with its line in SHA256SUMS
-tar -xzf "$asset"
+set -euo pipefail
+archive="potoo-portugol-studio-2-interpreter-v0.1.1-x86_64-unknown-linux-gnu.tar.gz"
+grep -F "  $archive" SHA256SUMS | sha256sum --check -
+tar -xzf "$archive"
 mkdir -p "$HOME/.local/bin"
-install -m 755 "${asset%.tar.gz}/potoo-portugol-studio-2" "$HOME/.local/bin/potoo-portugol-studio-2"
+install -m 755 "${archive%.tar.gz}/potoo-portugol-studio-2" "$HOME/.local/bin/potoo-portugol-studio-2"
 export PATH="$HOME/.local/bin:$PATH"
 potoo-portugol-studio-2 example.por
 ```
 
 To keep the command available in new Linux sessions, add the `export PATH="$HOME/.local/bin:$PATH"` line to your shell profile.
 
-### Windows x86_64 (PowerShell)
+### Windows x86_64 MSVC (PowerShell)
 
 ```powershell
-$archive = Get-ChildItem -Filter "potoo-portugol-studio-2-interpreter-v*-x86_64-pc-windows-msvc.zip" | Select-Object -First 1
-Get-FileHash $archive.FullName -Algorithm SHA256 # compare with the matching SHA256SUMS entry
-Expand-Archive $archive.FullName -DestinationPath .\potoo-portugol-studio-2
-$exe = Get-ChildItem .\potoo-portugol-studio-2 -Filter "potoo-portugol-studio-2.exe" -Recurse | Select-Object -First 1
-& $exe.FullName .\example.por
+$archive = "potoo-portugol-studio-2-interpreter-v0.1.1-x86_64-pc-windows-msvc.zip"
+$line = Get-Content .\SHA256SUMS | Where-Object { $_.EndsWith("  $archive") } | Select-Object -First 1
+if (-not $line) { throw "No SHA256SUMS entry found for $archive" }
+$expected = ($line -split '\s+')[0]
+$actual = (Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash.ToLowerInvariant()
+if ($actual -ne $expected) { throw "SHA-256 mismatch for $archive" }
+$installDir = Join-Path $env:USERPROFILE ".local\bin"
+New-Item -ItemType Directory -Force $installDir | Out-Null
+Expand-Archive -LiteralPath $archive -DestinationPath $installDir
+$exe = Join-Path $installDir "potoo-portugol-studio-2-interpreter-v0.1.1-x86_64-pc-windows-msvc\potoo-portugol-studio-2.exe"
+& $exe .\example.por
 ```
 
-To run `potoo-portugol-studio-2.exe` from another folder, add the directory containing the executable to your user `PATH`.
+To run `potoo-portugol-studio-2.exe` from any folder, add `$env:USERPROFILE\.local\bin\potoo-portugol-studio-2-interpreter-v0.1.1-x86_64-pc-windows-msvc` to your user `Path` environment variable in Windows Settings.
 
-### Intel macOS
-
-The published macOS package targets Intel Macs (x86_64). There is no prebuilt Apple silicon package in the current release.
+### Intel macOS x86_64
 
 ```sh
-asset=$(ls -1 potoo-portugol-studio-2-interpreter-v*-x86_64-apple-darwin.tar.gz | head -n 1)
-shasum -a 256 "$asset" # compare with its line in SHA256SUMS
-tar -xzf "$asset"
+set -euo pipefail
+archive="potoo-portugol-studio-2-interpreter-v0.1.1-x86_64-apple-darwin.tar.gz"
+grep -F "  $archive" SHA256SUMS | shasum -a 256 -c -
+tar -xzf "$archive"
 mkdir -p "$HOME/.local/bin"
-install -m 755 "${asset%.tar.gz}/potoo-portugol-studio-2" "$HOME/.local/bin/potoo-portugol-studio-2"
+install -m 755 "${archive%.tar.gz}/potoo-portugol-studio-2" "$HOME/.local/bin/potoo-portugol-studio-2"
 export PATH="$HOME/.local/bin:$PATH"
 potoo-portugol-studio-2 example.por
 ```
 
-Add the `export PATH="$HOME/.local/bin:$PATH"` line to `~/.zprofile` to keep the command available in future macOS sessions.
+### Apple silicon macOS arm64
+
+```sh
+set -euo pipefail
+archive="potoo-portugol-studio-2-interpreter-v0.1.1-aarch64-apple-darwin.tar.gz"
+grep -F "  $archive" SHA256SUMS | shasum -a 256 -c -
+tar -xzf "$archive"
+mkdir -p "$HOME/.local/bin"
+install -m 755 "${archive%.tar.gz}/potoo-portugol-studio-2" "$HOME/.local/bin/potoo-portugol-studio-2"
+export PATH="$HOME/.local/bin:$PATH"
+potoo-portugol-studio-2 example.por
+```
+
+On macOS, add the `export PATH="$HOME/.local/bin:$PATH"` line to `~/.zprofile` to keep the command available in future sessions.
 
 
 ## Install from source
@@ -207,7 +230,7 @@ Add the `export PATH="$HOME/.local/bin:$PATH"` line to `~/.zprofile` to keep the
 With Rust 1.93 or later and network access, Cargo can install the command directly from its tagged source:
 
 ```sh
-cargo install --git https://github.com/diegopn/potoo-portugol-studio-2-interpreter.git --rev 0e7e799b83daa80a3e8189327d5d7f9126ae69ef --bin potoo-portugol-studio-2
+cargo install --git https://github.com/diegopn/potoo-portugol-studio-2-interpreter.git --tag v0.1.1 --bin potoo-portugol-studio-2
 ```
 
 ## Use as a Rust library
